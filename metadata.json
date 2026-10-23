@@ -1,0 +1,6 @@
+{
+  "name": "SKIMMS",
+  "description": "Smart Kavach for Intelligent Mine Monitoring - Real-time helmet telemetry, miner safety detection, and emergency coordination",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

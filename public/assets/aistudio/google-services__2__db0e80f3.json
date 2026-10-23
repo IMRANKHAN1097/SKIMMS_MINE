@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "791586742053",
+    "project_id": "skimms-5bbaf",
+    "storage_bucket": "skimms-5bbaf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791586742053:android:87cb902dc83b5d8ce8c4cc",
+        "android_client_info": {
+          "package_name": "SKIMMS.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCW1-rqHlIcZGw99uTGeFM-DIyq2FsP9sQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,277 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile representation in SKIMMS",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The unique Firebase Auth UID"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin", "worker"],
+          "description": "User access role"
+        },
+        "workerId": {
+          "type": "string",
+          "description": "Associated worker or helmet node id"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of user creation"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of user profile update"
+        }
+      },
+      "required": ["userId", "email", "role"]
+    },
+    "Worker": {
+      "title": "Worker",
+      "description": "Registered mining worker assigned to an ESP32 helmet node",
+      "type": "object",
+      "properties": {
+        "workerId": {
+          "type": "string",
+          "description": "Unique ESP32 node identifier, e.g. ESP32_NODE_01"
+        },
+        "helmetNumber": {
+          "type": "string",
+          "description": "Assigned helmet tag, e.g. HLM-042"
+        },
+        "workerName": {
+          "type": "string",
+          "description": "Full name of the miner"
+        },
+        "workerPin": {
+          "type": "string",
+          "description": "Worker security login PIN"
+        },
+        "deviceKey": {
+          "type": "string",
+          "description": "Server-generated hardware authentication key"
+        },
+        "registeredBy": {
+          "type": "string",
+          "description": "UID of the admin who registered this helmet"
+        },
+        "registeredAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Registration server timestamp"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ONLINE", "OFFLINE", "STANDBY"],
+          "description": "Current connection status"
+        },
+        "lastSeen": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of most recent packet"
+        }
+      },
+      "required": ["workerId", "helmetNumber", "workerName", "workerPin", "deviceKey"]
+    },
+    "Telemetry": {
+      "title": "Telemetry",
+      "description": "Sensor telemetry reading transmitted from an ESP32 helmet",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Telemetry document ID"
+        },
+        "workerId": {
+          "type": "string",
+          "description": "Worker ESP32 node identifier"
+        },
+        "helmetNumber": {
+          "type": "string",
+          "description": "Helmet tag"
+        },
+        "mq4": {
+          "type": "number",
+          "description": "MQ-4 methane ADC raw reading"
+        },
+        "mq135": {
+          "type": "number",
+          "description": "MQ-135 air quality ADC raw reading"
+        },
+        "accel": {
+          "type": "number",
+          "description": "Total acceleration magnitude in m/s2"
+        },
+        "ir": {
+          "type": "number",
+          "description": "MAX30105 optical IR pulse sensor count"
+        },
+        "batteryPct": {
+          "type": "number",
+          "description": "Helmet battery level percentage"
+        },
+        "lat": {
+          "type": "number",
+          "description": "GPS latitude"
+        },
+        "lng": {
+          "type": "number",
+          "description": "GPS longitude"
+        },
+        "gpsValid": {
+          "type": "boolean",
+          "description": "Whether GPS fix is locked"
+        },
+        "mpuOk": {
+          "type": "boolean",
+          "description": "MPU6050 status flag"
+        },
+        "maxOk": {
+          "type": "boolean",
+          "description": "MAX30105 status flag"
+        },
+        "mq4Ok": {
+          "type": "boolean",
+          "description": "MQ-4 status flag"
+        },
+        "mq135Ok": {
+          "type": "boolean",
+          "description": "MQ-135 status flag"
+        },
+        "healthHazard": {
+          "type": "boolean",
+          "description": "Health hazard flag"
+        },
+        "envHazard": {
+          "type": "boolean",
+          "description": "Environment hazard flag"
+        },
+        "missing": {
+          "type": "number",
+          "description": "Count of missing sensors"
+        },
+        "riskScore": {
+          "type": "number",
+          "description": "Calculated safety risk score 0 to 100"
+        },
+        "alertLevel": {
+          "type": "string",
+          "enum": ["SAFE", "CAUTION", "DANGER", "CRITICAL"],
+          "description": "Current threat level"
+        },
+        "aiReasons": {
+          "type": "string",
+          "description": "AI safety explanations or warnings"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        }
+      },
+      "required": ["workerId", "mq4", "mq135", "accel", "ir", "riskScore", "alertLevel"]
+    },
+    "Alert": {
+      "title": "Alert",
+      "description": "Safety alert or emergency incident log in SKIMMS",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Alert document ID"
+        },
+        "workerId": {
+          "type": "string",
+          "description": "Worker node ID"
+        },
+        "workerName": {
+          "type": "string",
+          "description": "Miner name"
+        },
+        "helmetNumber": {
+          "type": "string",
+          "description": "Helmet tag"
+        },
+        "alertLevel": {
+          "type": "string",
+          "enum": ["CAUTION", "DANGER", "CRITICAL", "SOS"],
+          "description": "Severity of incident"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Incident trigger description"
+        },
+        "riskScore": {
+          "type": "number",
+          "description": "Risk score at time of incident"
+        },
+        "acknowledged": {
+          "type": "boolean",
+          "description": "Whether control room acknowledged"
+        },
+        "acknowledgedBy": {
+          "type": "string",
+          "description": "Admin who acknowledged"
+        },
+        "acknowledgedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Acknowledgment timestamp"
+        },
+        "escalated": {
+          "type": "boolean",
+          "description": "Whether incident was escalated"
+        },
+        "webhookDispatched": {
+          "type": "boolean",
+          "description": "Whether Telegram/SMS webhook fired"
+        },
+        "lat": {
+          "type": "number",
+          "description": "Incident location latitude"
+        },
+        "lng": {
+          "type": "number",
+          "description": "Incident location longitude"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Incident trigger timestamp"
+        }
+      },
+      "required": ["workerId", "helmetNumber", "alertLevel", "reason", "acknowledged", "escalated"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "User" },
+      "description": "User profiles authenticated via Google Sign-In"
+    },
+    "/workers/{workerId}": {
+      "schema": { "$ref": "Worker" },
+      "description": "Registered helmet hardware and worker assignments"
+    },
+    "/telemetry/{telemetryId}": {
+      "schema": { "$ref": "Telemetry" },
+      "description": "Continuous helmet telemetry log for mine safety monitoring"
+    },
+    "/alerts/{alertId}": {
+      "schema": { "$ref": "Alert" },
+      "description": "Hazard, fall, man-down and SOS alerts with escalation tracking"
+    }
+  }
+}
